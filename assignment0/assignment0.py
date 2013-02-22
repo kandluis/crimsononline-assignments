@@ -96,7 +96,7 @@ def sortcat (num, *strings):
 
 def lookaway (trials):
     if trials < 0:
-        print "Improper trial number"
+        print "Improper trial number."
         return;
     else:
         trial = trials    
@@ -134,12 +134,12 @@ def shuttleboy():
     url = "http://shuttleboy.cs50.net/api/1.2/trips?a=Quad&b=Mass%20Ave%20Garden%20St&output=json"
     json_data = urllib.urlopen(url)
     data = json.load(json_data)
-    '''i = 0
+    i = 0
     for trip in data:
-        data[i][departs] = time.strptime(trip[departs],"u'%Y-%m-%dT%H:%M:%S")
-        i += 1'''
+        trip[u'departs'] = time.strptime(trip[u'departs'][11:],"%H:%M:%S")
+        i += 1
     
-    print data[0][departs], data[1][departs], data[2][departs]
+    print "The next shuttle arrives at "
     
 
 print("I love the Crimson tech department!")
