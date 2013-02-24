@@ -26,6 +26,7 @@ def fuzzbizz ():
 '''
 ' Problem 3 : Functions that swaps the most common and least common
 ' characters in a string
+' Theres probaly a better way. .isalpha() and .count() would have come in useful
 '''
 def swapchars (string):
     # counting the characters
@@ -123,7 +124,7 @@ def lookaway (trials):
     return;
 
 '''
-' Problem 8: Harvard Shuttle Boy
+' Problem 8: Harvard Shuttle Boy (done in a few minutes cuz I ran out of time)
 '''
 def shuttleboy():
     import time
@@ -143,10 +144,11 @@ def shuttleboy():
         times[i] = time_string[11:16]
         i = i + 3
 
+    print "Today is " + time.asctime() + ".\n\n"
     i = 0
     while i < 9:
-        var = "The next shuttle" if i == 0 else "And one after"
-        print var + " arrives at " + str(times[i]) + " which is in about " + str(times[i+1]) + " minutes and " + str(times[i+2]) + " seconds!"
+        var = "The next shuttle" if i == 0 else "There's another that"
+        print var + " arrives at " + str(times[i]) + " (in about " + str(times[i+1]) + " minutes and " + str(times[i+2]) + " seconds).\n"
         i = i + 3
     return;
 print("I love the Crimson tech department! All done! Woooooooooooot")
