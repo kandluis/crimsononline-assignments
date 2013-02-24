@@ -119,7 +119,7 @@ def lookaway (trials):
         trial -= 1
 
     # all done
-    print won/trials
+    print won
     return;
 
 '''
@@ -148,5 +148,5 @@ def shuttleboy():
         var = "The next shuttle" if i == 0 else "And one after"
         print var + " arrives at " + str(times[i]) + " which is in about " + str(times[i+1]) + " minutes and " + str(times[i+2]) + " seconds!"
         i = i + 3
-	return;
+    return;
 print("I love the Crimson tech department! All done! Woooooooooooot")
