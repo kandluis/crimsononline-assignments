@@ -2,15 +2,10 @@
 
 # code by Luis Perez
 
-# modules
-import random
-import urllib
-import json
-
 # Problem 1 - Complete
 
 '''
-' Problem 2 - coding of the FuzzBizz problem found here: 
+' Problem 2 - coding of the FuzzBizz problem found here:
 ' http://www.codinghorror.com/blog/2007/02/why-cant-programmers-program.html
 '''
 def fuzzbizz ():
@@ -29,7 +24,7 @@ def fuzzbizz ():
     return;
 
 '''
-' Problem 3 : Functions that swaps the most common and least common 
+' Problem 3 : Functions that swaps the most common and least common
 ' characters in a string
 '''
 def swapchars (string):
@@ -42,12 +37,12 @@ def swapchars (string):
         count[letter] += 1
        else:
         count[letter] = 1
-    
-    # error checking 
+
+    # error checking
     if len(count) == 0:
-        print "You passed in an empty string"
+        print "You passed in an letter-less string"
         return;
-           
+
     # looking for the mininum and maximum
     min = len(string)
     max = 0
@@ -58,9 +53,9 @@ def swapchars (string):
         if count[key] < min:
             l_letter = key
             min = count[key]
-            
-    # swapping the characters
-    new = ""      
+
+    # swapping the characters (had to make a new string :( )
+    new = ""
     for letter in string:
         if letter == c_letter:
             new += l_letter
@@ -69,24 +64,24 @@ def swapchars (string):
         else:
             new += letter
     print new
-    
+
     # all done
     return;
 
 '''
 ' Problem 4: Functions that concatenates strings
-'''    
+'''
 def sortcat (num, *strings):
-    
+
     # sorting input and concatenating
     length = len(strings);
     sorted_strings = sorted(strings, key = len, reverse=True)
-    
+
     # error checking
     if num < -1 or num > length:
         print "Incorrect usage"
         return;
-    
+
     print "".join(sorted_strings[0:num])
     return;
 
@@ -95,16 +90,17 @@ def sortcat (num, *strings):
 '''
 
 def lookaway (trials):
+    import random
     if trials < 0:
         print "Improper trial number."
         return;
     else:
-        trial = trials    
-    
+        trial = trials
+
     # 0 is symbolic for looking ahead (ie, loosing)
     won = 0
     while trial > 0:
-        
+
         # the game
         mario = True
         warrio = True
@@ -119,27 +115,38 @@ def lookaway (trials):
                 won += 1
                 break
             games += 1
-        
+
         trial -= 1
-        
+
     # all done
     print won/trials
     return;
 
 '''
 ' Problem 8: Harvard Shuttle Boy
-'''           
+'''
 def shuttleboy():
     import time
+    import urllib
+    import json
     url = "http://shuttleboy.cs50.net/api/1.2/trips?a=Quad&b=Mass%20Ave%20Garden%20St&output=json"
     json_data = urllib.urlopen(url)
     data = json.load(json_data)
+    now = time.mktime(time.localtime())
+    times = {}
     i = 0
     for trip in data:
-        trip[u'departs'] = time.strptime(trip[u'departs'][11:],"%H:%M:%S")
-        i += 1
-    
-    print "The next shuttle arrives at "
-    
+        time_string = trip[u'departs'][0:10] + " " + trip[u'departs'][11:]
+        depart = time.mktime(time.strptime(time_string,"%Y-%m-%d %H:%M:%S"))
+        times[i+1] = round((depart - now)/60)
+        times[i+2] = (depart - now) % 60
+        times[i] = time_string[11:16]
+        i = i + 3
 
-print("I love the Crimson tech department!")
+    i = 0
+    while i < 9:
+        var = "The next shuttle" if i == 0 else "And one after"
+        print var + " arrives at " + str(times[i]) + " which is in about " + str(times[i+1]) + " minutes and " + str(times[i+2]) + " seconds!"
+        i = i + 3
+	return;
+print("I love the Crimson tech department! All done! Woooooooooooot")
