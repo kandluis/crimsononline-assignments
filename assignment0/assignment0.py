@@ -120,7 +120,7 @@ def lookaway (trials):
         trial -= 1
 
     # all done
-    print won
+    print "Luigi won " + str(won) + " times out of " + str(trials) + " games"
     return;
 
 '''
