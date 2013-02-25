@@ -104,14 +104,14 @@ def lookaway (trials):
 
         # the game
         mario = True
-        warrio = True
+        wario = True
         peach = True
         games = 0
         while (games < 5):
-            if mario or warrio or peach:
-                mario = False if random.randint(0,5) == 0 else mario
-                warrio = False if random.randint(0,5) == 0 else warrio
-                peach = False if random.randint(0,5) == 0 else peach
+            if mario or wario or peach:
+                mario = False if random.randint(0,4) == 0 else mario
+                wario = False if random.randint(0,4) == 0 else wario
+                peach = False if random.randint(0,4) == 0 else peach
             else:
                 won += 1
                 break
