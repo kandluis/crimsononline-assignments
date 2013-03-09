@@ -40,6 +40,23 @@ g)  With a minimum of code duplication, modify the Building class so that
     chose to inherit any classes from Building (which you should have).
 """
 
+locations = {}
+
+def find((x,y)):
+    if locations.has_key((x,y)):
+        return locations[(x,y)]
+    else:
+        None
+        
+def add(building,(x,y)):
+    if locations.has_key((x,y)):
+        print("There's a building already there!")
+        find((x,y))
+        return False
+    else:
+        locations[(x,y)] = building
+        return True
+
 class Person(object):
     def __init__(self,name,gender):
         import string
@@ -58,12 +75,16 @@ class Person(object):
 
             
 class Building(object):
-    def __init__(self,name):
-        self.rooms = {}
-        self.count = 0
-        self.name = "Building: " + name
-        print("New building constructed. {}".format(self.name))
-    
+    def __init__(self,name,(x,y)):
+        if add(self,(x,y)):
+            self.rooms = {}
+            self.count = 0
+            self.location = (x,y)
+            self.name = "Building: " + name
+            print("New building constructed. {}".format(self.name))
+        else:
+            return;
+
     def enter(self, person, room_no):
         if self.rooms.has_key(room_no):
             print("{} is already in that room.".format(self.rooms[room_no].name))
@@ -108,12 +129,16 @@ class Building(object):
             self.current += 1
             return self.rooms[self.rooms.keys()[self.current-1]]
 
+    # making the class array-like, bldg[person] = bldgn.enter(person)
+    def __setitem__(self,room_no,person):
+        self.enter(person,room_no)
+
 class Office(Building):
 
-    def __init__(self,name,employees):
-        self.name = "Office - " + name
-        self.employees = employees
-        super(Office,self).__init__(self.name,location)
+    def __init__(self,name,employees,(x,y)):
+        super(Office,self).__init__(self.name,(x,y))
+        import string
+        self.employees = [employee.capitalize() for employee in employees]
 
     def enter(self, person, room_no):
         if person.name in self.employees:
@@ -122,10 +147,9 @@ class Office(Building):
             print("{} is not an employee at {}".format(person.name,self.name))
         
 class House(Building):
-    def __init__(self,name):
-        self.name = "Home of " + name
+    def __init__(self,name,(x,y)):
+        super(House,self).__init__(self.name,(x,y))
         self.family = []
-        super(House,self).__init__(self.name,location)
         
     def enter(self,person):
         self.family.append(person)
@@ -158,4 +182,6 @@ class House(Building):
             self.current += 1
             return self.family[self.current-1]
         
-    
+    # overriding the "__setitem__"
+    def __setitem__(self,key,person):
+        self.enter(person)
