@@ -9,6 +9,7 @@ def common_words(filename):
     # open file and read words
     file = open(filename, "r")
     lines = map(lambda x: x.split(" "),file.readlines())
+    file.close()
     import itertools
     merged = list(itertools.chain.from_iterable(lines))
 
@@ -25,9 +26,8 @@ def common_words(filename):
     for word in sorted_words:
         listed.insert(0,word)
 
-    print listed[0:15]
-    
-    return
+    # return top 10. Who cares about the other ones?
+    return listed[:10]
 
 def common_words_min(filename, min_chars):
     """question 1b
@@ -55,9 +55,7 @@ def common_words_min(filename, min_chars):
         if len(word) >= min_chars:
             listed.insert(0,word)
 
-    print listed[0:15]
-    
-    return
+    return listed[:10]
 
 def common_words_tuple(filename, min_chars):
     """question 1c
@@ -75,7 +73,7 @@ def common_words_tuple(filename, min_chars):
 
     words = {}
     for word in merged:
-        if words.has_key(word):
+        if word in words:
             words[word] += 1
         else:
             words[word] = 1
@@ -87,9 +85,7 @@ def common_words_tuple(filename, min_chars):
         if len(word) >= min_chars:
             listed.insert(0,(words[word],word))
 
-    print listed[0:15]
-    
-    return
+    return listed[:15]
 
 def common_words_safe(filename, min_chars):
     """question 1d
@@ -106,7 +102,7 @@ def common_words_safe(filename, min_chars):
 
         words = {}
         for word in merged:
-            if words.has_key(word):
+            if word in words:
                 words[word] += 1
             else:
                 words[word] = 1
@@ -118,9 +114,7 @@ def common_words_safe(filename, min_chars):
             if len(word) >= min_chars:
                 listed.insert(0,(words[word],word))
 
-        print listed[0:15]
+        return listed[0:10]
         
     except IOError :
-        print "File does not exist"
-
-    return
+        print ("File {} does not exist".format(filename))
