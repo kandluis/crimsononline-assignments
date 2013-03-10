@@ -13,8 +13,11 @@ def common_words(filename):
     import itertools
     merged = list(itertools.chain.from_iterable(lines))
 
+    # count words (also ignoring non alphas
     words = {}
+    import re
     for word in merged:
+        word = re.sub(r'\W+', '',word).lower()
         if words.has_key(word):
             words[word] += 1
         else:
@@ -27,7 +30,7 @@ def common_words(filename):
         listed.insert(0,word)
 
     # return top 10. Who cares about the other ones?
-    return listed[:10]
+    return listed
 
 def common_words_min(filename, min_chars):
     """question 1b
@@ -42,8 +45,10 @@ def common_words_min(filename, min_chars):
     merged = list(itertools.chain.from_iterable(lines))
 
     words = {}
+    import re
     for word in merged:
-        if words.has_key(word):
+        word = re.sub(r'\W+', '',word).lower()
+        if word in words:
             words[word] += 1
         else:
             words[word] = 1
@@ -55,7 +60,7 @@ def common_words_min(filename, min_chars):
         if len(word) >= min_chars:
             listed.insert(0,word)
 
-    return listed[:10]
+    return listed
 
 def common_words_tuple(filename, min_chars):
     """question 1c
@@ -72,7 +77,9 @@ def common_words_tuple(filename, min_chars):
     merged = list(itertools.chain.from_iterable(lines))
 
     words = {}
+    import re
     for word in merged:
+        word = re.sub(r'\W+', '',word).lower()
         if word in words:
             words[word] += 1
         else:
@@ -85,7 +92,7 @@ def common_words_tuple(filename, min_chars):
         if len(word) >= min_chars:
             listed.insert(0,(words[word],word))
 
-    return listed[:15]
+    return listed
 
 def common_words_safe(filename, min_chars):
     """question 1d
@@ -101,7 +108,9 @@ def common_words_safe(filename, min_chars):
         merged = list(itertools.chain.from_iterable(lines))
 
         words = {}
+        import re
         for word in merged:
+            word = re.sub(r'\W+', '',word).lower()
             if word in words:
                 words[word] += 1
             else:
@@ -114,7 +123,7 @@ def common_words_safe(filename, min_chars):
             if len(word) >= min_chars:
                 listed.insert(0,(words[word],word))
 
-        return listed[0:10]
+        return listed
         
     except IOError :
         print ("File {} does not exist".format(filename))
