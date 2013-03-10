@@ -13,7 +13,7 @@ def common_words(filename):
     import itertools
     merged = list(itertools.chain.from_iterable(lines))
 
-    # count words (also ignoring non alphas
+    # count words (also ignoring non alphas, and lowercasing words)
     words = {}
     import re
     for word in merged:
@@ -38,30 +38,8 @@ def common_words_min(filename, min_chars):
     Modify this function to take a second argument that specifies the
     minimum number of characters long a word can be to be counted.
     """
-    # open file and read words
-    file = open(filename, "r")
-    lines = map(lambda x: x.split(" "),file.readlines())
-    import itertools
-    merged = list(itertools.chain.from_iterable(lines))
-
-    words = {}
-    import re
-    for word in merged:
-        word = re.sub(r'\W+', '',word).lower()
-        if word in words:
-            words[word] += 1
-        else:
-            words[word] = 1
-
-    sorted_words = sorted(words,key=words.get)
+    return filter (lambda x: len(x) > min_chars,common_words(filename))
     
-    listed = []
-    for word in sorted_words:
-        if len(word) >= min_chars:
-            listed.insert(0,word)
-
-    return listed
-
 def common_words_tuple(filename, min_chars):
     """question 1c
 
@@ -90,7 +68,7 @@ def common_words_tuple(filename, min_chars):
     listed = []
     for word in sorted_words:
         if len(word) >= min_chars:
-            listed.insert(0,(words[word],word))
+            listed.insert(0,(word,words[word]))
 
     return listed
 
@@ -101,29 +79,7 @@ def common_words_safe(filename, min_chars):
     a friendly error message.
     """
     try:
-        # open file and read words
-        file = open(filename, "r")
-        lines = map(lambda x: x.split(" "),file.readlines())
-        import itertools
-        merged = list(itertools.chain.from_iterable(lines))
-
-        words = {}
-        import re
-        for word in merged:
-            word = re.sub(r'\W+', '',word).lower()
-            if word in words:
-                words[word] += 1
-            else:
-                words[word] = 1
-
-        sorted_words = sorted(words,key=words.get)
-        
-        listed = []
-        for word in sorted_words:
-            if len(word) >= min_chars:
-                listed.insert(0,(words[word],word))
-
-        return listed
+        common_words_tuple(filename,min_chars)
         
     except IOError :
         print ("File {} does not exist".format(filename))
