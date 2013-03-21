@@ -107,6 +107,7 @@ ROOT_URLCONF = 'funandgames.urls'
 WSGI_APPLICATION = 'funandgames.wsgi.application'
 
 TEMPLATE_DIRS = (
+    '/home/luis/templates',
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
